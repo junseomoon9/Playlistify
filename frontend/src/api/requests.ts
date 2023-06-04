@@ -20,38 +20,36 @@ export const getAccessToken = (
 ): Promise<AuthenticationResponse> => {
   const authorizationHeader = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
-  return new Promise((resolve, reject) => {
-    axios
-      .post(spotify_accounts_url + "api/token", null, {
-        params: {
-          grant_type: "authorization_code",
-          code: payload.code,
-          redirect_uri: REDIRECT_URI,
-        },
-        headers: {
-          "content-type": "application/x-www-form-urlencoded",
-          Authorization: `Basic ` + authorizationHeader,
-        },
-      })
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
+  return axios.post(spotify_accounts_url + "api/token", null, {
+      params: {
+        grant_type: "authorization_code",
+        code: payload.code,
+        redirect_uri: REDIRECT_URI,
+      },
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ` + authorizationHeader,
+      },
+    })
+    .then((res) => {
+      return res.data
+    })
+    .catch((err) => {
+      throw err
+    });
 };
- 
+
 export const getTopItems = (payload: any): Promise<any[]> => {
-  return new Promise((resolve, reject) => {
-    axios.get(spotify_api_url + "me/top/" + payload.type, {
+  return axios.get(spotify_api_url + "me/top/" + payload.type, {
       params: {
         time_range: "short_term",
       },
       headers: {
         Authorization: `Bearer ` + payload.access_token,
       },
-    }).then((res) => {
+    })
+    .then((res) => {
+      // Randomly chooses 5 artists from total list
       let arr = []
       let artist_arr = res.data.items
       for (let i = 0; i < 5; i++) {
@@ -60,9 +58,37 @@ export const getTopItems = (payload: any): Promise<any[]> => {
         arr.push(artist_arr[index])
         artist_arr.splice(index, 1)
       }
-      resolve(arr)
-    }).catch((err) => {
-      reject(err)
+      return arr
     })
-  })
+    .catch((err) => {
+      throw err
+    })
 };
+
+export const getRecommendations = (payload: any): Promise<any[]> => {
+  // Convert array of seed artists into a string, each artists separated by a comma
+  const seed_artists = payload.seed_artists
+  let seed_artists_str = ""
+  for (let i = 0; i < seed_artists; i++) {
+    if (i === 0) {
+      seed_artists_str = seed_artists[i]
+    } else {
+      seed_artists_str += "," + seed_artists[i]
+    }
+  }
+
+  return axios.get(spotify_api_url + "recommendations", {
+      params: {
+        seed_artists: seed_artists_str,
+      },
+      headers: {
+        Authorization: `Bearer ` + payload.access_token,
+      },
+    })
+    .then((res) => {
+      return res.data
+    })
+    .catch((err) => {
+      throw err
+    })
+}
