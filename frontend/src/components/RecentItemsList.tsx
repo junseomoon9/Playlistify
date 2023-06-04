@@ -14,7 +14,6 @@ export const RecentItemsList = () => {
         type: "artists",
         access_token: cookies["access-token"],
       });
-      console.log(data);
       setRecentItems(data);
     } catch {
       return;

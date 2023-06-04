@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { RecentItemsList } from "../components/RecentItemsList";
+import { TrackList } from "../components/TrackList";
 import "./AppPage.css"
 
 export const AppPage = () => {
@@ -15,6 +16,15 @@ export const AppPage = () => {
         </div>
         <div className="recent-items-container">
           <RecentItemsList></RecentItemsList>
+        </div>
+        <div className="divider"></div>
+        <div className="playlist-details-container">
+          <div className="track-list-container">
+            <TrackList />
+          </div>
+          <div className="playlist-settings-container">
+
+          </div>
         </div>
       </div>
     </div>

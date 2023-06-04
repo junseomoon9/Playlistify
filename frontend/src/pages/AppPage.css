@@ -38,5 +38,15 @@
   margin: 0;
   color: #1DB954;
   font-size: 2rem;
-  font-weight: 200;
+  font-weight: 400;
+}
+
+.divider {
+  border-top: 1px solid white;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.playlist-details-container {
+  width: 100%;
 }
