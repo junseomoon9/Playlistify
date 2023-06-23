@@ -67,15 +67,8 @@ export const getTopItems = (payload: any): Promise<any[]> => {
 
 export const getRecommendations = (payload: any): Promise<any[]> => {
   // Convert array of seed artists into a string, each artists separated by a comma
-  const seed_artists = payload.seed_artists
-  let seed_artists_str = ""
-  for (let i = 0; i < seed_artists; i++) {
-    if (i === 0) {
-      seed_artists_str = seed_artists[i]
-    } else {
-      seed_artists_str += "," + seed_artists[i]
-    }
-  }
+  const seed_artists = payload.seed_artists;
+  let seed_artists_str = seed_artists.join();
 
   return axios.get(spotify_api_url + "recommendations", {
       params: {

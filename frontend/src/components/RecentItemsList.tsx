@@ -27,7 +27,7 @@ export const RecentItemsList = () => {
   return (
     <div className="recent-items-list-container">
       {recentItems.map((item) => (
-        <RecentItem imgUrl={item.images[0].url} artistName={item.name}/>
+        <RecentItem id={item.id} imgUrl={item.images[0].url} artistName={item.name}/>
       ))}
     </div>
   );

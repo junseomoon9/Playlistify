@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   font-family: 'DM Sans', sans-serif;
+  overflow-y: auto;
 }
 
 .app-page-container {
