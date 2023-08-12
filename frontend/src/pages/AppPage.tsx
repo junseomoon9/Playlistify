@@ -4,7 +4,6 @@ import { TrackList } from "../components/TrackList";
 import "./AppPage.css"
 
 export const AppPage = () => {
-
   return (
     <div className="app-page">
       <div className="app-page-container">
