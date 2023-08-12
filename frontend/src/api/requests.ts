@@ -15,6 +15,11 @@ interface AuthenticationResponse {
   token_type: string;
 }
 
+interface trackList {
+  seeds: []
+  tracks: []
+}
+
 export const getAccessToken = (
   payload: any
 ): Promise<AuthenticationResponse> => {
@@ -65,7 +70,7 @@ export const getTopItems = (payload: any): Promise<any[]> => {
     })
 };
 
-export const getRecommendations = (payload: any): Promise<any[]> => {
+export const getRecommendations = (payload: any): Promise<trackList> => {
   // Convert array of seed artists into a string, each artists separated by a comma
   const seed_artists = payload.seed_artists;
   let seed_artists_str = seed_artists.join();

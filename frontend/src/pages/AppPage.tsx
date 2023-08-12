@@ -22,9 +22,6 @@ export const AppPage = () => {
           <div className="track-list-container">
             <TrackList />
           </div>
-          <div className="playlist-settings-container">
-
-          </div>
         </div>
       </div>
     </div>

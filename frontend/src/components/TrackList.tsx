@@ -3,6 +3,7 @@ import { getRecommendations } from '../api/requests'
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
 import { useCookies } from "react-cookie";
+import { TrackListItem } from './TrackListItem';
 import "./TrackList.css"
 
 export const TrackList = () => {
@@ -12,11 +13,12 @@ export const TrackList = () => {
 
   const getTrackListSongs = async () => {
     try {
+      setTrackListSongs([])
       const data = await getRecommendations({
         access_token: cookies["access-token"],
         seed_artists: chosenTopItems
       });
-      setTrackListSongs(data);
+      setTrackListSongs(data.tracks);
     } catch {
       return;
     }
@@ -26,11 +28,20 @@ export const TrackList = () => {
     getTrackListSongs()
   }, [chosenTopItems])
 
-  return (
-    <div className="track-list-items-container">
+  if (trackListSongs.length > 0) {
+    return (
+      <>
         <div className="track-list-title-container">
           <h2>TrackList</h2>
         </div>
-    </div>
-  )
+        <div className="track-list-items-container">
+          {trackListSongs.map((track) => (
+            <TrackListItem track={track}/>
+          ))}
+        </div>
+      </>
+    )
+  } else {
+    return <></>
+  }
 }

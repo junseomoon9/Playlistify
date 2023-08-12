@@ -1,0 +1,42 @@
+.track-list-item-container {
+  width: 100%;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.track-list-item-title {
+  color: #1DB954;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 700px;
+}
+
+.track-list-item-artist {
+  color: white;
+  margin: 0;
+}
+
+.track-list-item-container img {
+  width: 150px;
+  object-fit: cover;
+}
+
+.track-list-item-title-and-artist-container {
+  flex: 1
+}
+
+.track-list-item-preview p {
+  color: rgb(219, 217, 217);
+  margin: 0;
+}
+
+.track-list-item-duration p {
+  color: white;
+  margin: 0;
+}
