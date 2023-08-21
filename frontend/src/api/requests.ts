@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AuthenticationResponseData, TrackListData, UserProfileData, PlaylistData } from "../interfaces/dataInterfaces";
 
 const spotify_accounts_url = "https://accounts.spotify.com/";
 const spotify_api_url = "https://api.spotify.com/v1/";
@@ -7,25 +8,14 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
-interface AuthenticationResponse {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
-}
-
-interface trackList {
-  seeds: []
-  tracks: []
-}
 
 export const getAccessToken = (
   payload: any
-): Promise<AuthenticationResponse> => {
+): Promise<AuthenticationResponseData> => {
   const authorizationHeader = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
-  return axios.post(spotify_accounts_url + "api/token", null, {
+  return axios
+    .post(spotify_accounts_url + "api/token", null, {
       params: {
         grant_type: "authorization_code",
         code: payload.code,
@@ -37,15 +27,16 @@ export const getAccessToken = (
       },
     })
     .then((res) => {
-      return res.data
+      return res.data;
     })
     .catch((err) => {
-      throw err
+      throw err;
     });
 };
 
 export const getTopItems = (payload: any): Promise<any[]> => {
-  return axios.get(spotify_api_url + "me/top/" + payload.type, {
+  return axios
+    .get(spotify_api_url + "me/top/" + payload.type, {
       params: {
         time_range: "short_term",
       },
@@ -55,27 +46,28 @@ export const getTopItems = (payload: any): Promise<any[]> => {
     })
     .then((res) => {
       // Randomly chooses 5 artists from total list
-      let arr = []
-      let artist_arr = res.data.items
+      let arr = [];
+      let artist_arr = res.data.items;
       for (let i = 0; i < 5; i++) {
-        let length = artist_arr.length
-        let index = Math.floor(Math.random() * length)
-        arr.push(artist_arr[index])
-        artist_arr.splice(index, 1)
+        let length = artist_arr.length;
+        let index = Math.floor(Math.random() * length);
+        arr.push(artist_arr[index]);
+        artist_arr.splice(index, 1);
       }
-      return arr
+      return arr;
     })
     .catch((err) => {
-      throw err
-    })
+      throw err;
+    });
 };
 
-export const getRecommendations = (payload: any): Promise<trackList> => {
+export const getRecommendations = (payload: any): Promise<TrackListData> => {
   // Convert array of seed artists into a string, each artists separated by a comma
   const seed_artists = payload.seed_artists;
   let seed_artists_str = seed_artists.join();
 
-  return axios.get(spotify_api_url + "recommendations", {
+  return axios
+    .get(spotify_api_url + "recommendations", {
       params: {
         seed_artists: seed_artists_str,
       },
@@ -84,9 +76,56 @@ export const getRecommendations = (payload: any): Promise<trackList> => {
       },
     })
     .then((res) => {
-      return res.data
+      return res.data;
     })
     .catch((err) => {
-      throw err
+      throw err;
+    });
+};
+
+export const getUserProfile = (payload: any): Promise<UserProfileData> => {
+  return axios
+    .get(spotify_api_url + "me", {
+      headers: {
+        Authorization: `Bearer ` + payload.access_token,
+      },
     })
-}
+    .then((res) => {
+      const data: UserProfileData = { id: res.data.id };
+      return data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const createPlaylist = (payload: any): Promise<PlaylistData> => {
+  return axios
+    .post(
+      spotify_api_url + `users/${payload.userID}/playlists`,
+      { name: payload.playlist_name },
+      {
+        headers: {
+          Authorization: `Bearer ` + payload.access_token,
+        },
+      }
+    )
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const addItemsToPlaylist = (payload: any) => {
+  return axios.post(
+    spotify_api_url + `playlists/${payload.playlist_id}/tracks`,
+    { uris: payload.uris },
+    {
+      headers: {
+        Authorization: `Bearer ` + payload.access_token,
+      },
+    }
+  );
+};

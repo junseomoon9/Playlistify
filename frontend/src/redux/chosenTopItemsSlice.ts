@@ -4,18 +4,13 @@ interface chosenTopItemsState {
   items: string[];
 }
 
-interface chooseTopItemAction {
-  payload: string;
-  type: string
-}
-
 const initialState: chosenTopItemsState = { items: [] };
 
 export const chosenTopItemsSlice = createSlice({
   name: "chosenTopItems",
   initialState,
   reducers: {
-    chooseTopItem: (state, action: chooseTopItemAction) => {
+    chooseTopItem: (state, action) => {
       state.items.push(action.payload)
     },
     removeTopItem: (state, action) => {

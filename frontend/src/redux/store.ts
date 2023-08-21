@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import chosenTopItemsReducer from "./chosenTopItemsSlice";
+import playlistItemsReducer from "./playlistItemsSlice";
 
 const store = configureStore({
   reducer: {
-    chosenTopItems: chosenTopItemsReducer
+    chosenTopItems: chosenTopItemsReducer,
+    playlistItems: playlistItemsReducer
   },
 });
 
