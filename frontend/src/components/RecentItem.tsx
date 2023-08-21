@@ -15,10 +15,10 @@ export const RecentItem = ({ id, imgUrl, artistName }: props) => {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (selected) {
-      dispatch(removeTopItem(id))
+      dispatch(removeTopItem({id, artistName}))
       e.currentTarget.style.border = ""
     } else {
-      dispatch(chooseTopItem(id))
+      dispatch(chooseTopItem({id, artistName}))
       e.currentTarget.style.border = "0.3rem solid #1DB954"
     }
     setSelected(!selected)

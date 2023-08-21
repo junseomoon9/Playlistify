@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ChosenTopItemData } from "../interfaces/dataInterfaces";
 
 interface chosenTopItemsState {
-  items: string[];
+  items: ChosenTopItemData[];
 }
 
 const initialState: chosenTopItemsState = { items: [] };

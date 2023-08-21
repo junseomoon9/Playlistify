@@ -21,9 +21,10 @@ export const TrackList = () => {
         setIsLoading(true)
       }
       dispatch(clearPlaylistItems())
+      const seed_artists = chosenTopItems.map(item => item.id)
       const data = await getRecommendations({
         access_token: cookies["access-token"],
-        seed_artists: chosenTopItems
+        seed_artists: seed_artists
       });
       dispatch(insertPlaylistItems(data.tracks))
       setIsLoading(false)

@@ -19,6 +19,11 @@ export interface PlaylistData {
   id: string
 }
 
+export interface ChosenTopItemData {
+  id: string;
+  artistName: string;
+}
+
 export interface TrackData {
   uri: string
 }
