@@ -1,5 +1,10 @@
 import axios from "axios";
-import { AuthenticationResponseData, TrackListData, UserProfileData, PlaylistData } from "../interfaces/dataInterfaces";
+import {
+  AuthenticationResponseData,
+  TrackListData,
+  UserProfileData,
+  PlaylistData,
+} from "../interfaces/dataInterfaces";
 
 const spotify_accounts_url = "https://accounts.spotify.com/";
 const spotify_api_url = "https://api.spotify.com/v1/";
@@ -7,7 +12,6 @@ const spotify_api_url = "https://api.spotify.com/v1/";
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
-
 
 export const getAccessToken = (
   payload: any
@@ -33,6 +37,27 @@ export const getAccessToken = (
       throw err;
     });
 };
+
+export const refreshAccessToken = (payload: any) => {
+  const authorizationHeader = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+
+  return axios.post(spotify_accounts_url + "api/token", null, {
+    params: {
+      grant_type: 'refresh_token',
+      refresh_token: payload.refresh_token
+    },
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      Authorization: `Basic ` + authorizationHeader,
+    },
+  })
+  .then((res) => {
+    return res.data;
+  })
+  .catch((err) => {
+    throw err;
+  });
+}
 
 export const getTopItems = (payload: any): Promise<any[]> => {
   return axios

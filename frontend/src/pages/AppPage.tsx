@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { getAccessToken, getUserProfile } from "../api/requests";
+import { getUserProfile, refreshAccessToken } from "../api/requests";
 import { useCookies } from "react-cookie";
 import UserContext from "../contexts/UserContext";
 import { RecentItemsList } from "../components/RecentItemsList";
@@ -11,6 +11,13 @@ export const AppPage = () => {
   const userContext = useContext(UserContext);
   const [cookies, setCookie] = useCookies(['access-token', 'refresh-token']);
 
+  const refreshAndUpdateAccessToken = async () => {
+    const tokenData = await refreshAccessToken({refresh_token: cookies["refresh-token"]})
+    let expires = new Date()
+    expires.setTime(expires.getTime() + (tokenData.expires_in * 1000))
+    setCookie('access-token', tokenData.access_token, {path: "/", expires: expires})
+  }
+
   const getUserProfileAndSetUserID = async () => {
     const userData = await getUserProfile({access_token: cookies["access-token"]})
     userContext?.setUserID(userData.id)
@@ -18,6 +25,13 @@ export const AppPage = () => {
 
   useEffect(() => {
     getUserProfileAndSetUserID()
+
+    // Every 50 minutes, spotify access token is refreshed
+    const interval = setInterval(() => {
+      refreshAndUpdateAccessToken()
+    }, 3000000)
+
+    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -32,11 +46,9 @@ export const AppPage = () => {
         <div className="recent-items-container">
           <RecentItemsList></RecentItemsList>
         </div>
-        <div className="divider"></div>
         <div className="settings-container">
           <Settings />
         </div>
-        <div className="divider"></div>
         <div className="track-list-container">
           <TrackList />
         </div>

@@ -48,6 +48,7 @@ export const TrackList = () => {
     if (playlistItems.length > 0) {
       return (
         <>
+          <div className="divider"></div>
           <div className="track-list-title-container">
             <h2>TrackList</h2>
           </div>

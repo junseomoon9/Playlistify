@@ -60,22 +60,29 @@ export const Settings = () => {
         playlistNameInputRef.current.value = `Playlistify Playlist: ${artist_names}`
       }
     }
-  }, [chosenTopItems])
+  }, [chosenTopItems, playlistItems])
 
-  return (
-    <div className="settings-components-container">
-      <div className="create-playlist-container">
-        <h2>Playlist Name</h2>
-        <input
-          type="text"
-          ref={playlistNameInputRef}
-          onChange={() => handlePlaylistNameInputChange()}
-        />
-        <button onClick={() => handlePlaylistCreateButtonClick()}>
-          Create Playlist
-        </button>
-      </div>
-      <div className="settings-options-container"></div>
-    </div>
-  );
+  if (chosenTopItems.length > 0) {
+    return (
+      <>
+        <div className="divider"></div>
+        <div className="settings-components-container">
+          <div className="create-playlist-container">
+            <h2>Playlist Name</h2>
+            <input
+              type="text"
+              ref={playlistNameInputRef}
+              onChange={() => handlePlaylistNameInputChange()}
+            />
+            <button onClick={() => handlePlaylistCreateButtonClick()}>
+              Create Playlist
+            </button>
+          </div>
+          <div className="settings-options-container"></div>
+        </div>
+      </>
+    );
+  } else {
+    return <></>
+  }
 };
