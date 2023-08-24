@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { getUserProfile, refreshAccessToken } from "../api/requests";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import UserContext from "../contexts/UserContext";
 import { RecentItemsList } from "../components/RecentItemsList";
@@ -9,7 +10,14 @@ import "./AppPage.css"
 
 export const AppPage = () => {
   const userContext = useContext(UserContext);
-  const [cookies, setCookie] = useCookies(['access-token', 'refresh-token']);
+  let navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['access-token', 'refresh-token']);
+
+  const checkAuthorization = () => {
+    if (!cookies["access-token"] || !cookies["refresh-token"]) {
+      logout()
+    }
+  }
 
   const refreshAndUpdateAccessToken = async () => {
     const tokenData = await refreshAccessToken({refresh_token: cookies["refresh-token"]})
@@ -23,7 +31,15 @@ export const AppPage = () => {
     userContext?.setUserID(userData.id)
   }
 
+  const logout = () => {
+    removeCookie("access-token")
+    removeCookie("refresh-token")
+    navigate("/", { replace: true })
+  }
+
   useEffect(() => {
+    checkAuthorization()
+
     getUserProfileAndSetUserID()
 
     // Every 50 minutes, spotify access token is refreshed
@@ -37,8 +53,9 @@ export const AppPage = () => {
   return (
     <div className="app-page">
       <div className="app-page-container">
-        <div className="title-container">
-          <h1>Playlistify</h1>
+        <div className="title-and-logout-container">
+          <h1 className="title">Playlistify</h1>
+          <button className="logout-button" onClick={() => logout()}>Log Out</button>
         </div>
         <div className="subtitle-container">
           <h2>Generate playlists with new music based on your top favorite artists.</h2>

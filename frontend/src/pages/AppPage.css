@@ -16,18 +16,34 @@
   padding: 1rem;
 }
 
-.title-container {
+.title-and-logout-container {
   width: 100%;
   height: 120px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.title-container h1 {
+.title {
   margin: 0;
   color: white;
   font-size: 3.5rem;
   font-weight: 600;
+}
+
+.logout-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #1DB954;
+  border-radius: 1rem;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+  background-color: #15df5b;
 }
 
 .subtitle-container {
