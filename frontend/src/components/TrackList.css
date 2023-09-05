@@ -15,7 +15,7 @@
   flex-wrap: wrap;
 }
 
-.loader-container {
+.tracklist-loader-container {
   width: 100%;
   display: flex;
   justify-content: center;

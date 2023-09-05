@@ -40,7 +40,7 @@ export const TrackList = () => {
 
   if (isLoading) {
     return (
-      <div className='loader-container'>
+      <div className='tracklist-loader-container'>
         <RotateLoader color="#1DB954"></RotateLoader>
       </div>
     )

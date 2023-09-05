@@ -32,5 +32,5 @@ export const AuthorizationCallbackPage = () => {
     }
   });
 
-  return <div>AuthorizationCallbackPage</div>;
+  return <div></div>;
 };

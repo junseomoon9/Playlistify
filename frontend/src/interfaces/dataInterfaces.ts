@@ -16,7 +16,8 @@ export interface UserProfileData {
 }
 
 export interface PlaylistData {
-  id: string
+  id: string;
+  external_urls: {spotify: String};
 }
 
 export interface ChosenTopItemData {

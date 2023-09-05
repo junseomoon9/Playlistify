@@ -15,8 +15,9 @@ export const chosenTopItemsSlice = createSlice({
       state.items.push(action.payload)
     },
     removeTopItem: (state, action) => {
-      const indexToRemove = state.items.indexOf(action.payload)
-      state.items.splice(indexToRemove, 1)
+      state.items = state.items.filter((item) => {
+        return item.id !== action.payload.id
+      })
     },
   },
 });
