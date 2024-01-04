@@ -13,7 +13,8 @@ export const TrackList = () => {
   const [cookies] = useCookies(["access-token", "refresh-token"]);
   const dispatch = useDispatch();
   const chosenTopItems = useSelector((state: RootState) => state.chosenTopItems.items);
-  const playlistItems = useSelector((state: RootState) => state.playlistItems.items)
+  const playlistItems = useSelector((state: RootState) => state.playlistItems.items);
+  const settings = useSelector((state: RootState) => state.settings.options);
 
   const getTrackListSongs = async () => {
     try {
@@ -24,7 +25,8 @@ export const TrackList = () => {
       const seed_artists = chosenTopItems.map(item => item.id)
       const data = await getRecommendations({
         access_token: cookies["access-token"],
-        seed_artists: seed_artists
+        seed_artists: seed_artists,
+        settings
       });
       dispatch(insertPlaylistItems(data.tracks))
       setIsLoading(false)
@@ -36,7 +38,7 @@ export const TrackList = () => {
 
   useEffect(() => {
     getTrackListSongs()
-  }, [chosenTopItems])
+  }, [chosenTopItems, settings])
 
   if (isLoading) {
     return (

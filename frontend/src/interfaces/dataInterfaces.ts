@@ -28,3 +28,10 @@ export interface ChosenTopItemData {
 export interface TrackData {
   uri: string
 }
+
+export interface SliderData {
+  id: string;
+  title: string;
+  range: number[];
+  rangeLabels: string[];
+}

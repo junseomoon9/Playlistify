@@ -95,6 +95,18 @@ export const getRecommendations = (payload: any): Promise<TrackListData> => {
     .get(spotify_api_url + "recommendations", {
       params: {
         seed_artists: seed_artists_str,
+        min_tempo: payload.settings.min_tempo,
+        max_tempo: payload.settings.max_tempo,
+        min_danceability: payload.settings.min_danceability,
+        max_danceability: payload.settings.max_danceability,
+        min_energy: payload.settings.min_energy,
+        max_energy: payload.settings.max_energy,
+        min_popularity: payload.settings.min_popularity,
+        max_popularity: payload.settings.max_popularity,
+        min_speechiness: payload.settings.min_speechiness,
+        max_speechiness: payload.settings.max_speechiness,
+        min_liveness: payload.settings.min_liveness,
+        max_liveness: payload.settings.max_liveness,
       },
       headers: {
         Authorization: `Bearer ` + payload.access_token,

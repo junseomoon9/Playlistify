@@ -5,11 +5,14 @@ import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import { createPlaylist, addItemsToPlaylist } from "../api/requests";
+import { Slider } from "./Slider";
+import { SliderData } from "../interfaces/dataInterfaces";
 import "./Settings.css";
 
 export const Settings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [playlistLink, setPlaylistLink] = useState<null | string>(null);
+  const [playlistNameChanged, setPlaylistNameChanged] = useState(false);
   const userContext = useContext(UserContext);
   const [cookies] = useCookies(["access-token", "refresh-token"]);
   const playlistNameInputRef = useRef<HTMLInputElement>(null);
@@ -19,8 +22,44 @@ export const Settings = () => {
   const playlistItems = useSelector(
     (state: RootState) => state.playlistItems.items
   );
-
-  const [playlistNameChanged, setPlaylistNameChanged] = useState(false);
+  const slidersData: SliderData[] = [
+    {
+      id: "tempo",
+      title: "Tempo",
+      range: [0, 250],
+      rangeLabels: ["Slow", "Fast"]
+    },
+    {
+      id: "danceability",
+      title: "Danceability",
+      range: [0, 100],
+      rangeLabels: ["Not Danceable", "Break It Down"]
+    },
+    {
+      id: "energy",
+      title: "Energy",
+      range: [0, 100],
+      rangeLabels: ["Chill", "Fire"]
+    },
+    {
+      id: "popularity",
+      title: "Popularity",
+      range: [0, 100],
+      rangeLabels: ["Underground", "Global"]
+    },
+    {
+      id: "speechiness",
+      title: "Speechiness",
+      range: [0, 100],
+      rangeLabels: ["Singing", "Rap"]
+    },
+    {
+      id: "liveness",
+      title: "Liveness",
+      range: [0, 100],
+      rangeLabels: ["Not Live", "Live"]
+    }
+  ]
 
   const createAndPopulatePlaylist = async () => {
     try {
@@ -72,7 +111,7 @@ export const Settings = () => {
         playlistNameInputRef.current.value = `Playlistify Playlist: ${artist_names}`;
       }
     }
-    setPlaylistLink(null)
+    setPlaylistLink(null);
   }, [chosenTopItems, playlistItems]);
 
   const renderContent = () => {
@@ -81,16 +120,18 @@ export const Settings = () => {
         <div className="settings-loader-container">
           <ClipLoader color="#1DB954" />
         </div>
-      )
+      );
     }
 
     if (playlistLink) {
       return (
         <div className="playlist-creation-success-messages-container">
           <h2>Playlist Created</h2>
-          <a href={playlistLink} target="_blank">View Playlist on Spotify</a>
+          <a href={playlistLink} target="_blank">
+            View Playlist on Spotify
+          </a>
         </div>
-      )
+      );
     }
 
     return (
@@ -105,8 +146,8 @@ export const Settings = () => {
           Create Playlist
         </button>
       </>
-    )
-  }
+    );
+  };
 
   // We display settings once user clicks on at least one top item
   if (chosenTopItems.length > 0) {
@@ -114,10 +155,12 @@ export const Settings = () => {
       <>
         <div className="divider"></div>
         <div className="settings-components-container">
-          <div className="create-playlist-container">
-            {renderContent()}
+          <div className="create-playlist-container">{renderContent()}</div>
+          <div className="settings-options-container">
+            {slidersData.map((sliderData) => (
+              <Slider {...sliderData}/>
+            ))}
           </div>
-          <div className="settings-options-container"></div>
         </div>
       </>
     );

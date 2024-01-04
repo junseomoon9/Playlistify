@@ -1,6 +1,6 @@
 .settings-components-container {
   width: 100%;
-  height: 8rem;
+  height: 9rem;
   display: flex;
   gap: 1rem;
 }
@@ -45,6 +45,7 @@
   border-bottom: 1px white solid;
   color: white;
   font-size: 1.25rem;
+  margin-top: 0.5rem;
 }
 
 .create-playlist-container input:focus {
@@ -55,6 +56,10 @@
   flex: 2;
   background-color: rgb(51, 50, 50);
   border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 0.5rem
 }
 
 .settings-loader-container {

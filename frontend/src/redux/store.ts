@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import chosenTopItemsReducer from "./chosenTopItemsSlice";
 import playlistItemsReducer from "./playlistItemsSlice";
+import settingsReducer from "./settingsSlice";
 
 const store = configureStore({
   reducer: {
     chosenTopItems: chosenTopItemsReducer,
-    playlistItems: playlistItemsReducer
+    playlistItems: playlistItemsReducer,
+    settings: settingsReducer
   },
 });
 
