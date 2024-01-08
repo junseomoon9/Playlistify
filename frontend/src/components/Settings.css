@@ -89,3 +89,14 @@
   color: #15df5b;
   font-size: 1.1rem;
 }
+
+@media screen and (max-width: 992px) {
+  .settings-components-container {
+    flex-direction: column;
+    height: fit-content;
+  }
+
+  .create-playlist-container button {
+    margin-top: 1rem;
+  }
+}

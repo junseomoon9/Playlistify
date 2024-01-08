@@ -8,7 +8,7 @@
 
 .horizontal-slider-container h2 {
   margin: 0;
-  color: white;
+  color: #15df5b;
   font-size: 1rem;
   font-weight: 400;
   margin-bottom: 0.65rem;
@@ -32,7 +32,7 @@
 
 .horizontal-slider .track-1 {
   height: 0.2rem;
-  background-color: #1db954;
+  background-color: #69b985;
 }
 
 .horizontal-slider-option-labels-container {

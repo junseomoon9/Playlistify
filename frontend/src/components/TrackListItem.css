@@ -28,7 +28,7 @@
 }
 
 .track-list-item-title-and-artist-container {
-  flex: 1
+  flex: 1;
 }
 
 .track-list-item-preview p {
@@ -39,4 +39,10 @@
 .track-list-item-duration p {
   color: white;
   margin: 0;
+}
+
+@media screen and (min-width: 600px) {
+  .track-list-item-title-and-artist-container {
+    width: 100px;
+  }
 }
