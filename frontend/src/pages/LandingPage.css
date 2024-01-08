@@ -2,4 +2,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: black;
+  flex-direction: column;
+  font-family: 'DM Sans', sans-serif;
+  width: 100vw;
+  height: 100vh;
+}
+
+.landing-page-title {
+  color: white;
+  font-size: 8rem;
+  margin: 0;
+}
+
+.lading-page-subtitle {
+  color: #1DB954;
+  font-size: 2rem;
+  margin: 0l;
+  text-align: center;
+}
+
+.landing-page-login-button {
+  margin-top: 1rem;
+  width: 11rem;
+  height: 3rem;
+  border-radius: 1rem;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #1DB954;
+  color: white;
+}
+
+.landing-page-login-button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #1DB954;
 }
