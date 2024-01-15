@@ -31,7 +31,6 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   const state = generateRandomString(16);
-  // res.cookie(stateKey, state);
 
   const scope = "user-top-read user-read-private playlist-modify-public playlist-modify-private user-read-recently-played";
 
