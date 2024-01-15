@@ -3,7 +3,7 @@ import "./LandingPage.css";
 
 export const LandingPage = () => {
   const login = () => {
-    window.location.href="http://localhost:8888/login";
+    window.location.href="https://playlistify-backend.vercel.app/login";
   }
 
   return (
